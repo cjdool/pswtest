@@ -1,0 +1,10 @@
+instr = input()
+inlist = instr.split()
+A = int(inlist[0])
+B = int(inlist[1])
+C = int(inlist[2])
+
+print((A+B)%C)
+print(((A%C)+(B%C))%C)
+print((A*B)%C)
+print(((A%C)*(B%C))%C)
