@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 
 M, N = map(int, sys.stdin.readline().split())
 box = []
@@ -9,15 +10,16 @@ for _ in range(N):
     box.append(list(map(int, sys.stdin.readline().split())))
     visited.append([-1] * M)
 
-queue = []
+queue = deque([])
 for i in range(N):
     for j in range(M):
         if box[i][j] == 1:
             queue.append((i, j))
             visited[i][j] = 0
 
+maxval = 0
 while queue:
-    x, y = queue.pop(0)
+    x, y = queue.popleft()
 
     for i in range(4):
         nx = x + dx[i]
@@ -25,15 +27,13 @@ while queue:
         if 0 <= nx < N and 0 <= ny < M:
             if visited[nx][ny] == -1 and box[nx][ny] == 0:
                 visited[nx][ny] = visited[x][y] + 1
+                maxval = max(maxval, visited[nx][ny])
                 queue.append((nx, ny))
 
-
-maxval = -1
 flag = True
 for i in range(N):
     for j in range(M):
         if box[i][j] == 0 and visited[i][j] == -1:
             flag = False
             break
-        maxval = max(maxval, visited[i][j])
 print(maxval if flag else -1)
