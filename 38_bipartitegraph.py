@@ -1,4 +1,6 @@
 import sys
+from collections import deque
+
 
 def checkbipart(graph, num):
     visited = [False] * num
@@ -6,11 +8,11 @@ def checkbipart(graph, num):
     for i in range(num):
         if not visited[i]:
             visited[i] = True
-            color[0] = 1
-            queue = [i]
+            color[i] = 1
+            queue = deque([i])
 
             while len(queue) != 0:
-                cur = queue.pop(0)
+                cur = queue.popleft()
                 for item in graph[cur]:
                     if not visited[item]:
                         color[item] = -1 * color[cur]
