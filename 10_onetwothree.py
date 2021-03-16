@@ -1,4 +1,3 @@
-#다시 풀것 Dynamic Programming
 def getcase(num):
     if num == 1:
         return 1
