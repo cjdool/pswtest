@@ -6,27 +6,26 @@ tmap = []
 visited = []
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
+queue = deque([])
+waterqueue = deque([])
 startx = 0
 starty = 0
 for i in range(R):
     temp = list(sys.stdin.readline().strip())
     tmap.append(temp)
     visited.append([-1]*C)
-    if 'S' in temp:
-        startx = i
-        for j in range(C):
-            if temp[j] == 'S':
-                starty = j
+    for j in range(C):
+        if temp[j] == 'S':
+            queue.append((i, j))
+            startx = i
+            starty = j
+        if temp[j] == '*':
+            waterqueue.append((i, j))
 
-queue = deque([(startx, starty)])
+
 visited[startx][starty] = 0
 timemap = [tmap]
 pos = True
-
-def makenextmap(currentmap):
-
-
-
 
 while queue:
     x, y = queue.popleft()
@@ -37,20 +36,22 @@ while queue:
         print(curtime)
         break
 
-    if curtime+1 >= len(timemap): # 2초 -> 3초 자료 필요 -> 최소 4길이 보
+    if curtime >= len(timemap)-1:
         curmap = timemap[curtime]
-        nextmap = makenextmap(curmap)
+
+
+
+
+
         timemap.append(nextmap)
 
     for i in range(4):
         nx = x + dx[i]
         ny = y + dy[i]
         if 0<= nx < R and 0<= ny < C:
-
-
-
-
-
+            if visited[nx][ny] == -1 and (timemap[curtime+1][nx][ny] != '*' or timemap[curtime+1][nx][ny] != 'X'):
+                visited[nx][ny] = visited[x][y] + 1
+                queue.append((nx, ny))
 
 
 if pos:
